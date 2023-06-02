@@ -19,16 +19,17 @@ import java.util.List;
 
 @Slf4j
 @Service
-@DataSource("slave")
 public class UserService {
 
     @Resource
     private UserMapper userMapper;
 
-    public List<User> getAllUsers() {
-        log.error("mapper-data:{}", userMapper.getAllUsers());
+    @DataSource("slave")
+    public Object getAllUsers() {
         userMapper.getAllUsers().forEach(System.out::println);
-        userMapper.update();
-        return userMapper.getAllUsers();
+        System.out.println(userMapper.getAllUsers());
+        List<User> allUsers = userMapper.getAllUsers();
+        System.out.println(allUsers);
+        return allUsers;
     }
 }

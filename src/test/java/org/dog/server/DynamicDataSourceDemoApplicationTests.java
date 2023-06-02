@@ -15,12 +15,17 @@ class DynamicDataSourceDemoApplicationTests {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserMapper um;
+
     @Test
     void contextLoads() {
-        List<User> allUsers = userService.getAllUsers();
-        for (User allUser : allUsers) {
-            System.out.println(allUser);
-        }
+        Object allUsers = userService.getAllUsers();
+//        System.out.println(allUsers);
+        System.out.println(allUsers);
+//        for (User allUser : allUsers) {
+//            System.out.println(allUser);
+//        }
 
     }
 

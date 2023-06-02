@@ -1,9 +1,11 @@
 package org.dog.server.aspect;
 
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.dog.server.annotation.DataSource;
@@ -29,6 +31,9 @@ public class DataSourceAspect {
 
     @Around("pc()")
     public Object around(ProceedingJoinPoint point) {
+
+        System.out.println("executed");
+
         DataSource dataSource = getDataSource(point);
         if (dataSource != null) {
             String value = dataSource.value();
@@ -36,17 +41,18 @@ public class DataSourceAspect {
 
             DynamicDataSourceContextHolder.setDataSourceType(value);
         }
+        Object o = null;
         try {
-            point.proceed();
+            o = point.proceed();
         } catch (Throwable e) {
             e.printStackTrace();
         } finally {
             DynamicDataSourceContextHolder.clearDataSourceType();
         }
-        return null;
+        return o;
     }
 
-    public DataSource getDataSource(ProceedingJoinPoint point) {
+    public DataSource getDataSource(JoinPoint point) {
         MethodSignature signature = (MethodSignature) point.getSignature();
         DataSource annotation = AnnotationUtils.findAnnotation(signature.getMethod(), DataSource.class);
         if (annotation != null) {
