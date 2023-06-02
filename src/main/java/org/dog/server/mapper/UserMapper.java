@@ -20,5 +20,5 @@ public interface UserMapper {
     List<User> getAllUsers();
 
     @Update("update user set age=100 where id = 1")
-    void insert();
+    void update();
 }

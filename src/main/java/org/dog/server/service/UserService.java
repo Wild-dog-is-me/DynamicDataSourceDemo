@@ -28,7 +28,7 @@ public class UserService {
     public List<User> getAllUsers() {
         log.error("mapper-data:{}", userMapper.getAllUsers());
         userMapper.getAllUsers().forEach(System.out::println);
-        userMapper.insert();
+        userMapper.update();
         return userMapper.getAllUsers();
     }
 }

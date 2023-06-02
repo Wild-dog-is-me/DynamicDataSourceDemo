@@ -28,11 +28,9 @@ public class LoadDataSource {
     public Map<String, DataSource> loadAllDataSource() {
         Map<String, DataSource> map = new HashMap<>();
         Map<String, Map<String, String>> ds = druidProperties.getDs();
-        log.error("=======ds======={}",ds);
         try {
             Set<String> keySet = ds.keySet();
             for (String key : keySet) {
-                log.error("=======[key]======={}",key);
                 map.put(key, druidProperties.dataSource((DruidDataSource) DruidDataSourceFactory.createDataSource(ds.get(key))));
             }
         } catch (Exception e) {
